@@ -58,5 +58,6 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-# plist
+# google-service app 구성파일
 /ios/MeetChat.xcodeproj/*
+/android/app/google-services.json
