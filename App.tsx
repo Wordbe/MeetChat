@@ -2,6 +2,7 @@ import React from 'react';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import Routes from './src/navigation/Routes';
 import Colors from './src/constants/Colors';
+import { AuthProvider } from './src/navigation/AuthProvider';
 
 const theme = {
   ...DefaultTheme,
@@ -16,7 +17,9 @@ const theme = {
 const App: React.FC = () => {
   return (
     <PaperProvider theme={theme}>
-      <Routes />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </PaperProvider>
   );
 };

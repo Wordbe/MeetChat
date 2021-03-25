@@ -5,25 +5,25 @@ import Colors from '../../constants/Colors';
 
 interface FormButtonType {
   title: string;
-  modeValue: string;
-  onPress?: () => void;
+  modeValue: 'text' | 'outlined' | 'contained';
   [rest: string]: any;
 }
 
 const { width, height } = Dimensions.get('screen');
 
-const FormButton: React.FC<FormButtonType> = props => {
+const FormButton = (props: FormButtonType) => {
+  const { title, modeValue, ...rest } = props;
+
   return (
     <Button
       style={styles.button}
       contentStyle={styles.buttonContainer}
-      mode={props.modeValue}
+      mode={modeValue}
       dark={true}
-      onPress={props.onPress}
       // color={Colors.primary}
-      {...props.rest}
+      {...rest}
     >
-      {props.title}
+      {title}
     </Button>
   );
 };

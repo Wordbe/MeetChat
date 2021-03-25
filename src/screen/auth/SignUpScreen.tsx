@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Title, Text } from 'react-native-paper';
 import FormInput from '../../component/form/FormInput';
@@ -7,13 +7,16 @@ import Colors from '../../constants/Colors';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StackParamType } from '../../navigation/AuthStackNavigator';
 
+import { AuthContext } from '../../navigation/AuthProvider';
+
 type SingUpScreepPropType = {
   navigation: StackNavigationProp<StackParamType, 'SignUpScreen'>;
 };
 
 const SignUpScreen: React.FC<SingUpScreepPropType> = props => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register } = useContext(AuthContext);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   return (
     <View style={styles.container}>
@@ -35,6 +38,10 @@ const SignUpScreen: React.FC<SingUpScreepPropType> = props => {
         title="완료"
         modeValue="contained"
         labelStyle={styles.loginButtonLabel}
+        onPress={() => {
+          console.log(email + ' ' + password);
+          register(email, password);
+        }}
       />
       <FormButton
         title="back"

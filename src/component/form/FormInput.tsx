@@ -10,14 +10,16 @@ interface FormInputType {
 
 const { width, height } = Dimensions.get('screen');
 
-const FormInput: React.FC<FormInputType> = props => {
+const FormInput = (props: FormInputType) => {
+  const { labelName, ...rest } = props;
+
   return (
     <TextInput
       style={styles.input}
-      label={props.labelName}
+      label={labelName}
       numberOfLines={1}
       mode={'outlined'}
-      {...props.rest}
+      {...rest}
     />
   );
 };
