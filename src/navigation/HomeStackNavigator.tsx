@@ -26,8 +26,9 @@ const ChatAppStackNavigator: React.FC = () => {
         headerStyle: {
           backgroundColor: Colors.primary
         },
-        headerTitle: 'Meet Chat 목록',
         headerTintColor: '#fff',
+        headerTitle: 'Meet Chat 목록',
+        headerTitleAlign: 'center',
         headerTitleStyle: {
           fontSize: 20
         }

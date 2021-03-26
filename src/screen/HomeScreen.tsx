@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import { AuthContext } from '../navigation/AuthProvider';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RoomStackParamType } from '../navigation/HomeStackNavigator';
+import Icon from 'react-native-vector-icons/Entypo';
 
 type HomeScreenPropType = {
   navigation: StackNavigationProp<RoomStackParamType, 'ChatApp'>;
@@ -16,7 +17,7 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
 
   return (
     <View style={styles.container}>
-      <Title>Home Screen</Title>
+      <Icon name="chat" size={40} color={Colors.third} />
       <Title>모든 채팅방 목록이 보입니다.</Title>
       <Title>{aUser.uid}</Title>
       <FormButton
