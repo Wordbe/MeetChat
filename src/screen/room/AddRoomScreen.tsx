@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { IconButton, Title } from 'react-native-paper';
 import FormInput from '../../component/form/FormInput';
 import FormButton from '../../component/form/FormButton';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RoomStackParamType } from '../../navigation/HomeStackNavigator';
+import firestore from '@react-native-firebase/firestore';
 
 type RoomScreenPropType = {
   navigation: StackNavigationProp<RoomStackParamType, 'ChatApp'>;
 };
 
 const AddRoomScreen: React.FC<RoomScreenPropType> = props => {
-  const [roomName, setRoomName] = useState('');
+  const [roomName, setRoomName] = useState<string>('');
+
+  const handleButtonPress = () => {
+    if (roomName.length > 0) {
+      firestore()
+        .collection('THREADS')
+        .add({
+          name: roomName
+        })
+        .then(() => {
+          props.navigation.navigate('ChatApp');
+        });
+    }
+  };
 
   return (
     <View style={styles.rootContainer}>
