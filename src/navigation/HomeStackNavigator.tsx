@@ -1,23 +1,25 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconButton } from 'react-native-paper';
-import HomeScreen from '../screen/HomeScreen';
-import AddRoomScreen from '../screen/room/AddRoomScreen';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+import HomeScreen from '../screen/chatApp/HomeScreen';
+import AddRoomScreen from '../screen/modal/AddRoomScreen';
 import Colors from '../constants/Colors';
+import RoomScreen from '../screen/chatApp/RoomScreen';
+import { ThreadType } from '../screen/chatApp/HomeScreen';
+
+type HomeScreenPropType = {
+  navigation: StackNavigationProp<ModalStackParamType, 'AddRoomScreen'>;
+};
 
 export type ChatAppStackParamType = {
   // undefined = doesn't have parameters
-  HomeScreen: undefined;
-};
-
-export type RoomStackParamType = {
-  // undefined = doesn't have parameters
-  ChatApp: undefined;
-  AddRoomScreen: undefined;
+  HomeScreen: undefined | { navigation: HomeScreenPropType };
+  RoomScreen: undefined | { thread: ThreadType };
 };
 
 const ChatAppStack = createStackNavigator<ChatAppStackParamType>();
-const ModalStack = createStackNavigator<RoomStackParamType>();
 
 const ChatAppStackNavigator: React.FC = () => {
   return (
@@ -27,7 +29,6 @@ const ChatAppStackNavigator: React.FC = () => {
           backgroundColor: Colors.primary
         },
         headerTintColor: '#fff',
-        headerTitle: 'Meet Chat 목록',
         headerTitleAlign: 'center',
         headerTitleStyle: {
           fontSize: 20
@@ -37,7 +38,8 @@ const ChatAppStackNavigator: React.FC = () => {
       <ChatAppStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={({ navigation }: any) => ({
+        options={({ navigation }) => ({
+          title: 'Meet Chat',
           headerRight: () => (
             <IconButton
               icon="message-plus"
@@ -48,9 +50,24 @@ const ChatAppStackNavigator: React.FC = () => {
           )
         })}
       />
+      <ChatAppStack.Screen
+        name="RoomScreen"
+        component={RoomScreen}
+        options={({ route }) => ({
+          title: route.params?.thread.name
+        })}
+      />
     </ChatAppStack.Navigator>
   );
 };
+
+export type ModalStackParamType = {
+  // undefined = doesn't have parameters
+  ChatApp: undefined;
+  AddRoomScreen: undefined;
+};
+
+const ModalStack = createStackNavigator<ModalStackParamType>();
 
 const HomeStackNavigator: React.FC = () => {
   return (

@@ -4,14 +4,15 @@ import { IconButton, Title } from 'react-native-paper';
 import FormInput from '../../component/form/FormInput';
 import FormButton from '../../component/form/FormButton';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RoomStackParamType } from '../../navigation/HomeStackNavigator';
+import { ModalStackParamType } from '../../navigation/HomeStackNavigator';
 import firestore from '@react-native-firebase/firestore';
+import Colors from '../../constants/Colors';
 
-type RoomScreenPropType = {
-  navigation: StackNavigationProp<RoomStackParamType, 'ChatApp'>;
+type AddRoomScreenPropType = {
+  navigation: StackNavigationProp<ModalStackParamType, 'ChatApp'>;
 };
 
-const AddRoomScreen: React.FC<RoomScreenPropType> = props => {
+const AddRoomScreen: React.FC<AddRoomScreenPropType> = props => {
   const [roomName, setRoomName] = useState<string>('');
 
   const handleButtonPress = () => {
@@ -33,20 +34,20 @@ const AddRoomScreen: React.FC<RoomScreenPropType> = props => {
         <IconButton
           icon="close-circle"
           size={36}
-          color="#6646ee"
+          color={Colors.third}
           onPress={() => props.navigation.goBack()}
         />
       </View>
       <View style={styles.innerContainer}>
         <Title style={styles.title}>새로운 방을 만드세요.</Title>
         <FormInput
-          labelName="Room Name"
+          labelName="채팅방 이름"
           value={roomName}
           onChangeText={(text: string) => setRoomName(text)}
           clearButtonMode="while-editing"
         />
         <FormButton
-          title="Create"
+          title="생성"
           modeValue="contained"
           labelStyle={styles.buttonLabel}
           onPress={() => handleButtonPress()}

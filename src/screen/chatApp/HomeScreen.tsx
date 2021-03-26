@@ -1,30 +1,29 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { List, Divider } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Entypo';
 import firestore from '@react-native-firebase/firestore';
-import { AuthContext } from '../navigation/AuthProvider';
-import Colors from '../constants/Colors';
-import { RoomStackParamType } from '../navigation/HomeStackNavigator';
-import Loading from '../component/Loading';
+
+import Colors from '../../constants/Colors';
+import { ChatAppStackParamType } from '../../navigation/HomeStackNavigator';
+import Loading from '../../component/Loading';
 
 type HomeScreenPropType = {
-  navigation: StackNavigationProp<RoomStackParamType, 'ChatApp'>;
+  navigation: StackNavigationProp<ChatAppStackParamType, 'RoomScreen'>;
 };
 
-type ThreadType = {
+export type ThreadType = {
   _id: string;
   name: string;
 };
 
 const HomeScreen: React.FC<HomeScreenPropType> = props => {
-  const { aUser, logout } = useContext(AuthContext);
-
   const [threads, setThreads] = useState<ThreadType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    // fetch THREADS from firestore
     const unsubscribe = firestore()
       .collection('THREADS')
       .onSnapshot(querySnashot => {
@@ -59,14 +58,20 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
         keyExtractor={item => item._id}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item }) => (
-          <List.Item
-            title={item.name}
-            description="Item description"
-            titleNumberOfLines={1}
-            titleStyle={styles.listTitle}
-            descriptionStyle={styles.listDescription}
-            descriptionNumberOfLines={1}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              props.navigation.navigate('RoomScreen', { thread: item })
+            }
+          >
+            <List.Item
+              title={item.name}
+              description="Item description"
+              titleNumberOfLines={1}
+              titleStyle={styles.listTitle}
+              descriptionStyle={styles.listDescription}
+              descriptionNumberOfLines={1}
+            />
+          </TouchableOpacity>
         )}
       />
     </View>
