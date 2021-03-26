@@ -5,12 +5,12 @@ import FormInput from '../../component/form/FormInput';
 import FormButton from '../../component/form/FormButton';
 import Colors from '../../constants/Colors';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { StackParamType } from '../../navigation/AuthStackNavigator';
+import { AuthStackParamType } from '../../navigation/AuthStackNavigator';
 
 import { AuthContext } from '../../navigation/AuthProvider';
 
 type SingUpScreepPropType = {
-  navigation: StackNavigationProp<StackParamType, 'SignUpScreen'>;
+  navigation: StackNavigationProp<AuthStackParamType, 'SignUpScreen'>;
 };
 
 const SignUpScreen: React.FC<SingUpScreepPropType> = props => {

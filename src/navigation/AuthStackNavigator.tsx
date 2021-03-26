@@ -3,12 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screen/auth/LoginScreen';
 import SignUpScreen from '../screen/auth/SignUpScreen';
 
-export type StackParamType = {
+export type AuthStackParamType = {
   // undefined = doesn't have parameters
   LoginScreen: undefined;
   SignUpScreen: undefined;
 };
-const Stack = createStackNavigator<StackParamType>();
+const Stack = createStackNavigator<AuthStackParamType>();
 
 const AuthStackNavigator: React.FC = () => {
   return (

@@ -3,10 +3,15 @@ import { View, StyleSheet } from 'react-native';
 import { Title } from 'react-native-paper';
 import FormButton from '../component/form/FormButton';
 import Colors from '../constants/Colors';
-
 import { AuthContext } from '../navigation/AuthProvider';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RoomStackParamType } from '../navigation/HomeStackNavigator';
 
-const HomeScreen: React.FC = () => {
+type HomeScreenPropType = {
+  navigation: StackNavigationProp<RoomStackParamType, 'ChatApp'>;
+};
+
+const HomeScreen: React.FC<HomeScreenPropType> = props => {
   const { aUser, logout } = useContext(AuthContext);
 
   return (
@@ -18,6 +23,11 @@ const HomeScreen: React.FC = () => {
         modeValue="contained"
         title="로그아웃"
         onPress={() => logout()}
+      />
+      <FormButton
+        modeValue="contained"
+        title="방 만들기"
+        onPress={() => props.navigation.navigate('AddRoomScreen')}
       />
     </View>
   );

@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
-import Colors from '../../constants/Colors';
 
-interface FormButtonType {
+type FormButtonType = {
   title: string;
   modeValue: 'text' | 'outlined' | 'contained';
   [rest: string]: any;
-}
+};
 
 const { width, height } = Dimensions.get('screen');
 
@@ -20,7 +19,6 @@ const FormButton = (props: FormButtonType) => {
       contentStyle={styles.buttonContainer}
       mode={modeValue}
       dark={true}
-      // color={Colors.primary}
       {...rest}
     >
       {title}

@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		4FB3B071260CC99E00CBB882 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FB3B070260CC99E00CBB882 /* GoogleService-Info.plist */; };
+		4F87DAB5260CE2780067ADDC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F87DAB4260CE2780067ADDC /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E7CF567DB1C58B28A9339D12 /* libPods-MeetChat-MeetChatTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4314457F63CB983AF2062D0D /* libPods-MeetChat-MeetChatTests.a */; };
 		F8EA370CCF06DA4584C5F9FD /* libPods-MeetChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E47B6DCE88DC215DB68D22DB /* libPods-MeetChat.a */; };
@@ -41,7 +41,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MeetChat/main.m; sourceTree = "<group>"; };
 		4314457F63CB983AF2062D0D /* libPods-MeetChat-MeetChatTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MeetChat-MeetChatTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47667DA35F25131AFDFE5B66 /* Pods-MeetChat-MeetChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetChat-MeetChatTests.release.xcconfig"; path = "Target Support Files/Pods-MeetChat-MeetChatTests/Pods-MeetChat-MeetChatTests.release.xcconfig"; sourceTree = "<group>"; };
-		4FB3B070260CC99E00CBB882 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../security/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4F87DAB4260CE2780067ADDC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../security/meetchat/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MeetChat/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD36A96AD6B206C29546E436 /* Pods-MeetChat-MeetChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetChat-MeetChatTests.debug.xcconfig"; path = "Target Support Files/Pods-MeetChat-MeetChatTests/Pods-MeetChat-MeetChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E47B6DCE88DC215DB68D22DB /* libPods-MeetChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MeetChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,7 +129,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4FB3B070260CC99E00CBB882 /* GoogleService-Info.plist */,
+				4F87DAB4260CE2780067ADDC /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* MeetChat */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MeetChatTests */,
@@ -248,7 +248,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				4FB3B071260CC99E00CBB882 /* GoogleService-Info.plist in Resources */,
+				4F87DAB5260CE2780067ADDC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

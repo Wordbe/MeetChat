@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import Colors from '../../constants/Colors';
 
-interface FormInputType {
+type FormInputType = {
   labelName: string;
   [rest: string]: any;
-}
+};
 
 const { width, height } = Dimensions.get('screen');
 
