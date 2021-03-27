@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { List, Divider } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -8,6 +8,8 @@ import firestore from '@react-native-firebase/firestore';
 import Colors from '../../constants/Colors';
 import { ChatAppStackParamType } from '../../navigation/HomeStackNavigator';
 import Loading from '../../component/Loading';
+import FormButton from '../../component/form/FormButton';
+import { AuthContext } from '../../navigation/AuthProvider';
 
 type HomeScreenPropType = {
   navigation: StackNavigationProp<ChatAppStackParamType, 'RoomScreen'>;
@@ -19,6 +21,7 @@ export type ThreadType = {
 };
 
 const HomeScreen: React.FC<HomeScreenPropType> = props => {
+  const { logout } = useContext(AuthContext);
   const [threads, setThreads] = useState<ThreadType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -52,6 +55,11 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
     <View style={styles.container}>
       <View style={styles.head}>
         <Icon name="chat" size={40} color={Colors.third} />
+        <FormButton
+          title="로그아웃"
+          modeValue="contained"
+          onPress={() => logout?.()}
+        />
       </View>
       <FlatList
         data={threads}

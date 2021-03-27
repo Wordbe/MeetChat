@@ -38,10 +38,7 @@ const SignUpScreen: React.FC<SingUpScreepPropType> = props => {
         title="완료"
         modeValue="contained"
         labelStyle={styles.loginButtonLabel}
-        onPress={() => {
-          console.log(email + ' ' + password);
-          register(email, password);
-        }}
+        onPress={() => register?.(email, password)}
       />
       <FormButton
         title="back"

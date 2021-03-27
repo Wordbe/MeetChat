@@ -1,18 +1,21 @@
 import React, { createContext, useState } from 'react';
-import auth from '@react-native-firebase/auth';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+
+type AuserType = FirebaseAuthTypes.User | null;
+// type AuserType = FirebaseAuthTypes.UserCredential | null;
 
 export type AuthContextType = {
-  aUser: any;
-  setAuser: any;
-  login: any;
-  register: any;
-  logout: any;
+  aUser: AuserType;
+  setAuser: (aUser: AuserType) => void;
+  login: (email: string, password: string) => void;
+  register: (email: string, password: string) => void;
+  logout: () => void;
 };
 
 export const AuthContext = createContext<Partial<AuthContextType>>({});
 
 export const AuthProvider = ({ children }: any) => {
-  const [aUser, setAuser] = useState(null);
+  const [aUser, setAuser] = useState<AuserType>(null);
 
   return (
     <AuthContext.Provider

@@ -1,38 +1,99 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { GiftedChat, IMessage, Bubble, Send } from 'react-native-gifted-chat';
-import Colors from '../../constants/Colors';
+import firestore from '@react-native-firebase/firestore';
 
-const RoomScreen = () => {
-  const [messages, setMessages] = useState<IMessage[]>([
-    /**
-     * Mock message data
-     */
-    // example of system message
-    {
-      _id: 0,
-      text: 'New room created.',
-      createdAt: new Date().getTime(),
-      system: true,
-      user: { _id: '' }
-    },
-    // example of chat message
-    {
-      _id: 1,
-      text: 'Meet Chat 에 오신 것을 환영합니다',
-      createdAt: new Date().getTime(),
-      user: {
-        _id: 2,
-        name: 'Meet Chat'
-      }
+import Colors from '../../constants/Colors';
+import { AuthContext } from '../../navigation/AuthProvider';
+
+const defaultMessages: IMessage[] = [
+  // 기본 chat message
+  {
+    _id: '1',
+    text: 'Meet Chat 에 오신 것을 환영합니다',
+    createdAt: new Date().getTime(),
+    user: {
+      _id: '2',
+      name: 'Meet Chat'
     }
-  ]);
+  },
+  // 기본 system message
+  {
+    _id: '0',
+    text: '새로운 채팅방이 생성되었습니다.',
+    createdAt: new Date().getTime(),
+    system: true,
+    user: { _id: '', name: 'system' }
+  }
+];
+
+const RoomScreen = ({ route }: any) => {
+  const [messages, setMessages] = useState<IMessage[]>([]);
+
+  const { aUser } = useContext(AuthContext);
+  const currentUser = aUser;
+  const { thread } = route.params;
 
   // 메시지를 전송해주는 helper method
-  const handleSend = (newMessage: IMessage[] = []) => {
-    setMessages(GiftedChat.append(messages, newMessage));
+  const handleSend = async (newMessage: IMessage[] = []) => {
+    const text = newMessage[0].text;
+
+    firestore()
+      .collection('THREADS')
+      .doc(thread._id)
+      .collection('MESSAGES')
+      .add({
+        text,
+        createdAt: new Date().getTime(),
+        user: {
+          _id: currentUser?.uid,
+          name: currentUser?.email
+        }
+      });
+
+    await firestore()
+      .collection('THREADS')
+      .doc(thread._id)
+      .set(
+        {
+          latestMessage: {
+            text,
+            createdAt: new Date().getTime()
+          }
+        },
+        { merge: true }
+      );
   };
+
+  useEffect(() => {
+    const messagesListener = firestore()
+      .collection('THREADS')
+      .doc(thread._id)
+      .collection('MESSAGES')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(querySnapshot => {
+        const querySnapshotMessages = querySnapshot.docs.map(doc => {
+          const docData = doc.data();
+          const data: IMessage = {
+            _id: doc.id,
+            createdAt: docData.createdAt,
+            text: docData.text,
+            user: {
+              _id: docData.user._id,
+              name: docData.user.email
+            },
+            system: docData.system
+          };
+
+          return data;
+        });
+
+        setMessages([...querySnapshotMessages, ...defaultMessages]);
+      });
+
+    return () => messagesListener();
+  }, []);
 
   // 버블 렌더링 helper method
   const renderBubble = (props: any) => {
@@ -89,8 +150,8 @@ const RoomScreen = () => {
   return (
     <GiftedChat
       messages={messages}
-      onSend={newMessage => handleSend(newMessage)}
-      user={{ _id: 1, name: 'User1' }}
+      onSend={handleSend}
+      user={{ _id: currentUser?.uid ? currentUser.uid : '0' }}
       renderBubble={renderBubble}
       showUserAvatar={true}
       renderSend={renderSend}

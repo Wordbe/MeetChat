@@ -37,7 +37,7 @@ const LoginScreen: React.FC<LoginScreepPropType> = props => {
         title="로그인"
         modeValue="contained"
         labelStyle={styles.loginButtonLabel}
-        onPress={() => login(email, password)}
+        onPress={() => login?.(email, password)}
       />
       <FormButton
         title="회원가입"
