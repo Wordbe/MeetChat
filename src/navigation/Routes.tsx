@@ -13,7 +13,7 @@ const Routes: React.FC = () => {
 
   // aUser 상태변화를 핸들링한다.
   const onAuthStateChanged = (aUser: any) => {
-    setAuser(aUser);
+    setAuser?.(aUser);
     if (initializing) setInitializing(false);
     setLoading(false);
   };

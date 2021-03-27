@@ -1,5 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Text
+} from 'react-native';
 import { List, Divider } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -8,8 +14,6 @@ import firestore from '@react-native-firebase/firestore';
 import Colors from '../../constants/Colors';
 import { ChatAppStackParamType } from '../../navigation/HomeStackNavigator';
 import Loading from '../../component/Loading';
-import FormButton from '../../component/form/FormButton';
-import { AuthContext } from '../../navigation/AuthProvider';
 
 type HomeScreenPropType = {
   navigation: StackNavigationProp<ChatAppStackParamType, 'RoomScreen'>;
@@ -18,10 +22,30 @@ type HomeScreenPropType = {
 export type ThreadType = {
   _id: string;
   name: string;
+  latestMessage: {
+    createdAt: number;
+    text: string;
+  };
+};
+
+const listRight = (time: number) => {
+  const newDate = new Date(time);
+  const month = newDate.getMonth();
+  const date = newDate.getDate();
+  let hours = newDate.getHours().toString();
+  let minutes = newDate.getMinutes().toString();
+
+  if (hours.length < 2) hours = '0' + hours;
+  if (minutes.length < 2) minutes = '0' + minutes;
+
+  return (
+    <Text
+      style={styles.listRightText}
+    >{`${month}월 ${date}일 ${hours}:${minutes}`}</Text>
+  );
 };
 
 const HomeScreen: React.FC<HomeScreenPropType> = props => {
-  const { logout } = useContext(AuthContext);
   const [threads, setThreads] = useState<ThreadType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -29,12 +53,17 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
     // fetch THREADS from firestore
     const unsubscribe = firestore()
       .collection('THREADS')
+      .orderBy('latestMessage.createdAt', 'desc')
       .onSnapshot(querySnashot => {
         const _threads = querySnashot.docs.map(documentSnapshot => {
+          const docData = documentSnapshot.data();
           return {
             _id: documentSnapshot.id,
-            name: '',
-            ...documentSnapshot.data()
+            name: docData.name,
+            latestMessage: {
+              createdAt: docData.latestMessage.createdAt,
+              text: docData.latestMessage.text
+            }
           };
         });
         setThreads(_threads);
@@ -55,11 +84,6 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
     <View style={styles.container}>
       <View style={styles.head}>
         <Icon name="chat" size={40} color={Colors.third} />
-        <FormButton
-          title="로그아웃"
-          modeValue="contained"
-          onPress={() => logout?.()}
-        />
       </View>
       <FlatList
         data={threads}
@@ -73,11 +97,12 @@ const HomeScreen: React.FC<HomeScreenPropType> = props => {
           >
             <List.Item
               title={item.name}
-              description="Item description"
               titleNumberOfLines={1}
               titleStyle={styles.listTitle}
+              description={item.latestMessage.text}
               descriptionStyle={styles.listDescription}
               descriptionNumberOfLines={1}
+              right={() => listRight(item.latestMessage.createdAt)}
             />
           </TouchableOpacity>
         )}
@@ -100,7 +125,12 @@ const styles = StyleSheet.create({
     fontSize: 22
   },
   listDescription: {
-    fontSize: 16
+    fontSize: 14
+  },
+  listRightText: {
+    marginTop: 10,
+    fontSize: 12,
+    color: '#363F42'
   }
 });
 

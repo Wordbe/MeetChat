@@ -20,7 +20,11 @@ const AddRoomScreen: React.FC<AddRoomScreenPropType> = props => {
       firestore()
         .collection('THREADS')
         .add({
-          name: roomName
+          name: roomName,
+          latestMessage: {
+            text: `${roomName} 방에 참가했습니다.`,
+            createdAt: new Date().getTime()
+          }
         })
         .then(() => {
           props.navigation.navigate('ChatApp');
