@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import firestore from '@react-native-firebase/firestore';
 
 import Colors from '../../constants/Colors';
-import { ChatAppStackParamType } from '../../navigation/HomeStackNavigator';
+import { ChatAppStackParamType } from '../../navigation/ChatStackNavigator';
 import Loading from '../../component/Loading';
 
 type HomeScreenPropType = {

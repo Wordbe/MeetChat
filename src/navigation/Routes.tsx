@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthStackNavigator from './AuthStackNavigator';
 import auth from '@react-native-firebase/auth';
-import HomeStackNavigator from './HomeStackNavigator';
-import { AuthContext } from './AuthProvider';
+
+import AuthStackNavigator from './AuthStackNavigator';
+import HomeStackNavigator from './ChatStackNavigator';
+import { AuthContext, AuserType } from './AuthProvider';
 import Loading from '../component/Loading';
 
 const Routes: React.FC = () => {
@@ -12,7 +13,7 @@ const Routes: React.FC = () => {
   const [initializing, setInitializing] = useState(true);
 
   // aUser 상태변화를 핸들링한다.
-  const onAuthStateChanged = (aUser: any) => {
+  const onAuthStateChanged = (aUser: AuserType) => {
     setAuser?.(aUser);
     if (initializing) setInitializing(false);
     setLoading(false);

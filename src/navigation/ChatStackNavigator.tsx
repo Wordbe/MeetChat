@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { IconButton } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import HomeScreen from '../screen/chatApp/HomeScreen';
-import AddRoomScreen from '../screen/modal/AddRoomScreen';
+import ChatsScreen from '../screen/chat/ChatsScreen';
+import AddRoomScreen from '../screen/chat/modal/AddRoomScreen';
 import Colors from '../constants/Colors';
-import RoomScreen from '../screen/chatApp/RoomScreen';
-import { ThreadType } from '../screen/chatApp/HomeScreen';
+import RoomScreen from '../screen/chat/RoomScreen';
+import { ThreadType } from '../screen/chat/ChatsScreen';
+import { AuthContext } from './AuthProvider';
 
-type HomeScreenPropType = {
+type ChatsScreenPropType = {
   navigation: StackNavigationProp<ModalStackParamType, 'AddRoomScreen'>;
 };
 
 export type ChatAppStackParamType = {
   // undefined = doesn't have parameters
-  HomeScreen: undefined | { navigation: HomeScreenPropType };
+  ChatsScreen: undefined | { navigation: ChatsScreenPropType };
   RoomScreen: undefined | { thread: ThreadType };
 };
 
 const ChatAppStack = createStackNavigator<ChatAppStackParamType>();
 
 const ChatAppStackNavigator: React.FC = () => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <ChatAppStack.Navigator
       screenOptions={{
@@ -36,8 +39,8 @@ const ChatAppStackNavigator: React.FC = () => {
       }}
     >
       <ChatAppStack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="ChatsScreen"
+        component={ChatsScreen}
         options={({ navigation }) => ({
           title: 'Meet Chat',
           headerRight: () => (
@@ -46,6 +49,14 @@ const ChatAppStackNavigator: React.FC = () => {
               size={22}
               color={Colors.accent}
               onPress={() => navigation.navigate('AddRoomScreen')}
+            />
+          ),
+          headerLeft: () => (
+            <IconButton
+              icon="logout-variant"
+              size={26}
+              color={Colors.accent}
+              onPress={() => logout?.()}
             />
           )
         })}

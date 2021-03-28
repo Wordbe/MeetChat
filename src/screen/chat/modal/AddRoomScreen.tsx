@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, Title } from 'react-native-paper';
-import FormInput from '../../component/form/FormInput';
-import FormButton from '../../component/form/FormButton';
+import FormInput from '../../../component/form/FormInput';
+import FormButton from '../../../component/form/FormButton';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ModalStackParamType } from '../../navigation/HomeStackNavigator';
+import { ModalStackParamType } from '../../../navigation/ChatStackNavigator';
 import firestore from '@react-native-firebase/firestore';
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
 
 type AddRoomScreenPropType = {
   navigation: StackNavigationProp<ModalStackParamType, 'ChatApp'>;

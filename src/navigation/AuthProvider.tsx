@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
-type AuserType = FirebaseAuthTypes.User | null;
+export type AuserType = FirebaseAuthTypes.User | null;
 // type AuserType = FirebaseAuthTypes.UserCredential | null;
 
 export type AuthContextType = {
